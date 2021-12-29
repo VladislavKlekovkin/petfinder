@@ -98,8 +98,21 @@ def get_scheduler(scheduler, optimizer):
     
     if scheduler is 'LambdaLR':
         return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda e: .1 ** e)
-    
-    
+
+
+# def get_trans(img, I):
+#     if I >= 4:
+#         img = img.transpose(2,3)
+#     if I % 4 == 0:
+#         return img
+#     elif I % 4 == 1:
+#         return img.flip(2)
+#     elif I % 4 == 2:
+#         return img.flip(3)
+#     elif I % 4 == 3:
+#         return img.flip(2).flip(3)
+
+
 # model = timm.create_model('efficientnetv2_m')
 # print(model.__str__()[-1000:])
 # model
@@ -400,7 +413,7 @@ def run(notes='Baseline'):
 
         for epoch in range(1, Training.epochs + 1):
             print('Epoch:', epoch)
-            if epoch == Training.warm_up_epochs:
+            if (epoch - 1) == Training.warm_up_epochs:
                 model.unfreeze()
             train_loss, train_rmse = train_epoch(model, train_loader, optimizer)
             val_loss, val_rmse = val_epoch(model, val_loader)
@@ -449,6 +462,9 @@ def run(notes='Baseline'):
 
 # Experiments
 run(notes='Added metadata and one warm_up epoch')
+setattr(Training, 'lr', 5e-5)
+run(notes='Metadata, warm_up epoch, start lr = 5e-5')
+
 
 # for value in experiments['values']:
 #     setattr(Training, experiments['parameter'], value)
