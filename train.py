@@ -65,7 +65,7 @@ class Training(AttributeInspect):
     num_workers = 4
     image_size = 224
     use_meta = True
-    lr = 5e-6
+    lr = 5e-5
     scheduler = 'LambdaLR'
     if not use_meta:
         warm_up_epochs = 0
@@ -442,7 +442,8 @@ def run(notes='Baseline'):
 
             patience_counter += 1
             if scheduler:
-                scheduler.step() 
+                if epoch == 0:
+                    scheduler.step()
         
         # Memory cleaning
         model = None
@@ -461,9 +462,7 @@ def run(notes='Baseline'):
 # }
 
 # Experiments
-run(notes='Added metadata and one warm_up epoch')
-setattr(Training, 'lr', 5e-5)
-run(notes='Metadata, warm_up epoch, start lr = 5e-5')
+run(notes='Metadata, warm_up epoch, start lr = 5e-5, freeze lr 5e-6')
 
 
 # for value in experiments['values']:
