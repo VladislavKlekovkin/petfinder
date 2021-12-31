@@ -57,7 +57,7 @@ class Paths(AttributeInspect):
 class Training(AttributeInspect):
     
     kernel_type = 'swin_large_patch4_window7_224'  # 'efficientnetv2_m', 'swin_large_patch4_window7_224'
-    epochs = 5
+    epochs = 7
     warm_up_epochs = 1
     n_folds = 5
     batch_size = 2
@@ -120,7 +120,8 @@ def get_scheduler(scheduler, optimizer):
 augmentations_train = A.Compose([
     # A.Transpose(p=0.5),
     # A.VerticalFlip(p=0.5),
-    # A.HorizontalFlip(p=0.5),
+    A.HorizontalFlip(p=0.5),
+    A.RandomRotate90(p=0.5),
     # A.RandomBrightness(limit=0.2, p=0.75),
     # A.RandomContrast(limit=0.2, p=0.75),
     # A.OneOf([
@@ -442,8 +443,7 @@ def run(notes='Baseline'):
 
             patience_counter += 1
             if scheduler:
-                if epoch == 0:
-                    scheduler.step()
+                scheduler.step()
         
         # Memory cleaning
         model = None
@@ -462,7 +462,7 @@ def run(notes='Baseline'):
 # }
 
 # Experiments
-run(notes='Metadata, warm_up epoch, start lr = 5e-5, freeze lr 5e-6')
+run(notes='Add aug: HorizontalFlip, RandomRotate90')
 
 
 # for value in experiments['values']:
