@@ -119,9 +119,9 @@ def get_scheduler(scheduler, optimizer):
 
 augmentations_train = A.Compose([
     # A.Transpose(p=0.5),
-    # A.VerticalFlip(p=0.5),
-    A.HorizontalFlip(p=0.5),
-    A.RandomRotate90(p=0.5),
+    A.VerticalFlip(p=0.5),
+    # A.HorizontalFlip(p=0.5),
+    # A.RandomRotate90(p=0.5),
     # A.RandomBrightness(limit=0.2, p=0.75),
     # A.RandomContrast(limit=0.2, p=0.75),
     # A.OneOf([
@@ -137,8 +137,10 @@ augmentations_train = A.Compose([
     #     A.ElasticTransform(alpha=3),
     # ], p=0.7),
     #
-    # A.CLAHE(clip_limit=4.0, p=0.7),
-    # A.HueSaturationValue(hue_shift_limit=10, sat_shift_limit=20, val_shift_limit=10, p=0.5),
+    # A.CLAHE(),
+    # A.HueSaturationValue(),
+    # A.RandomBrightness(),
+    #
     # A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=15, border_mode=0, p=0.85),
     A.Resize(Training.image_size, Training.image_size),
     # A.Cutout(max_h_size=int(cfg.Training.image_size * 0.375),
@@ -462,7 +464,7 @@ def run(notes='Baseline'):
 # }
 
 # Experiments
-run(notes='Add aug: HorizontalFlip, RandomRotate90')
+run(notes='Add aug: VerticalFlip')
 
 
 # for value in experiments['values']:
