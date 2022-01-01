@@ -15,7 +15,7 @@ from datetime import datetime
 import pprint
 
 
-DEBUG = False
+DEBUG = True
 
 
 # REPRODUCIBILITY
@@ -120,7 +120,7 @@ def get_scheduler(scheduler, optimizer):
 augmentations_train = A.Compose([
     # A.Transpose(p=0.5),
     # A.VerticalFlip(p=0.5),
-    A.HorizontalFlip(p=0.5),
+    # A.HorizontalFlip(p=0.5),
     # A.RandomRotate90(p=0.5),
     # A.RandomBrightness(limit=0.2, p=0.75),
     # A.RandomContrast(limit=0.2, p=0.75),
@@ -191,11 +191,11 @@ class Model(torch.nn.Module):
         self.dropouts = torch.nn.ModuleList([
             torch.nn.Dropout(0.5) for _ in range(5)
         ])
-        
-        if kernel_type in ('swin_large_patch4_window7_224'):
+
+        if 'swin_' in kernel_type:
             in_features = self.model.head.in_features
             self.model.head = torch.nn.Identity()
-        elif kernel_type in ('efficientnetv2_m'):
+        elif 'efficientnetv2_' in kernel_type:
             in_features = self.model.classifier.in_features
             self.model.classifier = torch.nn.Identity()
             
@@ -464,8 +464,16 @@ def run(notes='Baseline'):
 # }
 
 # Experiments
-run(notes='Add aug: HorizontalFlip')
+setattr(Training, 'kernel_type', 'swin_large_patch4_window7_224_in22k')
+run(notes='Changed model: swin_large_patch4_window7_224_in22k')
 
+setattr(Training, 'image_size', 384)
+
+setattr(Training, 'kernel_type', 'swin_large_patch4_window12_384')
+run(notes='Changed model: swin_large_patch4_window12_384')
+
+setattr(Training, 'kernel_type', 'swin_large_patch4_window12_384_in22k')
+run(notes='Changed model: swin_large_patch4_window12_384_in22k')
 
 # for value in experiments['values']:
 #     setattr(Training, experiments['parameter'], value)
