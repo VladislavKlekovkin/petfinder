@@ -15,7 +15,7 @@ from datetime import datetime
 import pprint
 
 
-DEBUG = True
+DEBUG = False
 
 
 # REPRODUCIBILITY
