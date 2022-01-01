@@ -117,41 +117,49 @@ def get_scheduler(scheduler, optimizer):
 # print(model.__str__()[-1000:])
 # model
 
-augmentations_train = A.Compose([
-    # A.Transpose(p=0.5),
-    # A.VerticalFlip(p=0.5),
-    # A.HorizontalFlip(p=0.5),
-    # A.RandomRotate90(p=0.5),
-    # A.RandomBrightness(limit=0.2, p=0.75),
-    # A.RandomContrast(limit=0.2, p=0.75),
-    # A.OneOf([
-    #     A.MotionBlur(blur_limit=5),
-    #     A.MedianBlur(blur_limit=5),
-    #     A.GaussianBlur(blur_limit=5),
-    #     A.GaussNoise(var_limit=(5.0, 30.0)),
-    # ], p=0.7),
-    #
-    # A.OneOf([
-    #     A.OpticalDistortion(distort_limit=1.0),
-    #     A.GridDistortion(num_steps=5, distort_limit=1.),
-    #     A.ElasticTransform(alpha=3),
-    # ], p=0.7),
-    #
-    # A.CLAHE(),
-    # A.HueSaturationValue(),
-    # A.RandomBrightness(),
-    #
-    # A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=15, border_mode=0, p=0.85),
-    A.Resize(Training.image_size, Training.image_size),
-    # A.Cutout(max_h_size=int(cfg.Training.image_size * 0.375),
-    #          max_w_size=int(cfg.Training.image_size * 0.375), num_holes=1, p=0.7),
-    A.Normalize()
-])
+def get_augmentations_train():
+    augmentations_train = A.Compose([
+        # A.Transpose(p=0.5),
+        # A.VerticalFlip(p=0.5),
+        # A.HorizontalFlip(p=0.5),
+        # A.RandomRotate90(p=0.5),
+        # A.RandomBrightness(limit=0.2, p=0.75),
+        # A.RandomContrast(limit=0.2, p=0.75),
+        # A.OneOf([
+        #     A.MotionBlur(blur_limit=5),
+        #     A.MedianBlur(blur_limit=5),
+        #     A.GaussianBlur(blur_limit=5),
+        #     A.GaussNoise(var_limit=(5.0, 30.0)),
+        # ], p=0.7),
+        #
+        # A.OneOf([
+        #     A.OpticalDistortion(distort_limit=1.0),
+        #     A.GridDistortion(num_steps=5, distort_limit=1.),
+        #     A.ElasticTransform(alpha=3),
+        # ], p=0.7),
+        #
+        # A.CLAHE(),
+        # A.HueSaturationValue(),
+        # A.RandomBrightness(),
+        #
+        # A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=15, border_mode=0, p=0.85),
+        A.Resize(Training.image_size, Training.image_size),
+        # A.Cutout(max_h_size=int(cfg.Training.image_size * 0.375),
+        #          max_w_size=int(cfg.Training.image_size * 0.375), num_holes=1, p=0.7),
+        A.Normalize()
+    ])
 
-augmentations_val = A.Compose([
-    A.Resize(Training.image_size, Training.image_size),
-    A.Normalize()
-])
+    return augmentations_train
+
+
+def get_augmentations_val():
+    augmentations_val = A.Compose([
+        A.Resize(Training.image_size, Training.image_size),
+        A.Normalize()
+    ])
+
+    return augmentations_val
+
 
 sigmoid_torch = torch.nn.Sigmoid()
 
@@ -393,8 +401,8 @@ def run(notes='Baseline'):
 
         train_df = df[df['fold'] != fold]
         val_df = df[df['fold'] == fold]
-        train_dataset = PawpularDataset(csv=train_df, augmentations=augmentations_train)
-        val_dataset = PawpularDataset(csv=val_df, augmentations=augmentations_val)
+        train_dataset = PawpularDataset(csv=train_df, augmentations=get_augmentations_train())
+        val_dataset = PawpularDataset(csv=val_df, augmentations=get_augmentations_val())
         train_loader = torch.utils.data.DataLoader(train_dataset,
                                                    batch_size=Training.batch_size,
                                                    sampler=torch.utils.data.sampler.RandomSampler(train_dataset), 
