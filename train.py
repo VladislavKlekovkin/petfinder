@@ -15,7 +15,7 @@ from augmentations import get_augmentations_train, get_augmentations_val
 from model import Model
 from dataset import PawpularDataset
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     Training.epochs = 2
