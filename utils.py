@@ -6,12 +6,11 @@ from sklearn.metrics import mean_squared_error
 
 # REPRODUCIBILITY
 def set_random_seed(seed=42):
-    import sys
-    if 'random' in sys.modules:
+    if 'random' in dir():
         random.seed(seed)
-    if 'numpy' in sys.modules:
+    if 'numpy' in dir():
         np.random.seed(seed)
-    if 'torch' in sys.modules:
+    if 'torch' in dir():
         torch.manual_seed(seed)
 
 
