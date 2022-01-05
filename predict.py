@@ -63,7 +63,7 @@ for model_name in testing_models:
 
         model = Model(kernel_type=Training.kernel_type, n_meta_features=n_meta_features)
         model_path = os.path.join(Paths.weights, f'{model_name}_fold_{fold}_best.pth')
-        model.load(model_path, weights_only=True)
+        model.load_state_dict(torch.load(model_path))
         model = model.to(device)
 
         pred.append(val_epoch(model=model, loader=val_loader, criterion=criterion,
