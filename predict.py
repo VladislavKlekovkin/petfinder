@@ -47,16 +47,18 @@ oof_predictions = []
 targets = df['Pawpularity'].values
 
 testing_models = [('swin_large_patch4_window12_384_in22k_02-01-2022-23:53:35', 384),  # 1
-                  ('swin_large_patch4_window12_384_02-01-2022-10:46:15', 384),        # 2
-                  ('swin_large_patch4_window7_224_in22k_02-01-2022-04:51:06', 224),   # 3
-                  ('swin_large_patch4_window7_224_29-12-2021-21:45:26', 224)]         # 4
+                  # ('swin_large_patch4_window12_384_02-01-2022-10:46:15', 384),        # 2
+                  # ('swin_large_patch4_window7_224_in22k_02-01-2022-04:51:06', 224),   # 3
+                  # ('swin_large_patch4_window7_224_29-12-2021-21:45:26', 224)          # 4
+                 ]
 
 for model_name, image_size in testing_models:
     pred = []
+    Training.image_size = image_size
+
     for fold in range(Training.n_folds):
         val_df = df[df['fold'] == fold]
-        
-        Training.image_size = image_size
+
         val_dataset = PawpularDataset(csv=val_df, data_path=Paths.data,
                                       augmentations=get_augmentations_val(Training), meta_features=meta_features)
         val_loader = torch.utils.data.DataLoader(val_dataset,
@@ -69,7 +71,7 @@ for model_name, image_size in testing_models:
         model = model.to(device)
 
         pred.append(val_epoch(model=model, loader=val_loader, criterion=criterion,
-                              use_meta=Training.use_meta, device=device, DEBUG=DEBUG))
+                              use_meta=Training.use_meta, device=device, DEBUG=DEBUG, get_output=True))
 
     oof_predictions.append(np.concatenate(pred))
 
@@ -77,4 +79,4 @@ for model_name, image_size in testing_models:
 # TESTING RESULTS
 # solo
 for i, model_name in enumerate(testing_models):
-    print(model_name, ': ', root_mean_square_error(oof_predictions[i], targets))
+    print(f'{model_name}: {root_mean_square_error(oof_predictions[i], targets):.5f}')
