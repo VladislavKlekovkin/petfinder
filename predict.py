@@ -46,15 +46,17 @@ df['fold'] = np.random.randint(low=0, high=Training.n_folds, size=len(df))
 oof_predictions = []
 targets = df['Pawpularity'].values
 
-testing_models = ['swin_large_patch4_window12_384_in22k_02-01-2022-23:53:35',  # 1
-                  'swin_large_patch4_window12_384_02-01-2022-10:46:15',        # 2
-                  'swin_large_patch4_window7_224_in22k_02-01-2022-04:51:06',   # 3
-                  'swin_large_patch4_window7_224_29-12-2021-21:45:26']         # 4
+testing_models = [('swin_large_patch4_window12_384_in22k_02-01-2022-23:53:35', 384),  # 1
+                  ('swin_large_patch4_window12_384_02-01-2022-10:46:15', 384),        # 2
+                  ('swin_large_patch4_window7_224_in22k_02-01-2022-04:51:06', 224),   # 3
+                  ('swin_large_patch4_window7_224_29-12-2021-21:45:26', 224)]         # 4
 
-for model_name in testing_models:
+for model_name, image_size in testing_models:
     pred = []
     for fold in range(Training.n_folds):
         val_df = df[df['fold'] == fold]
+        
+        Training.image_size = image_size
         val_dataset = PawpularDataset(csv=val_df, data_path=Paths.data,
                                       augmentations=get_augmentations_val(Training), meta_features=meta_features)
         val_loader = torch.utils.data.DataLoader(val_dataset,
