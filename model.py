@@ -28,11 +28,15 @@ class SwishModule(torch.nn.Module):
 
 class Model(torch.nn.Module):
 
-    def __init__(self, kernel_type, n_meta_features=0, n_meta_dim=[512, 128]):
+    def __init__(self, kernel_type, n_meta_features=0, n_meta_dim=[512, 128], **kwargs):
 
         super().__init__()
         self.n_meta_features = n_meta_features
-        self.model = timm.create_model(kernel_type, pretrained=True)
+        if 'swin_' in kernel_type:
+            self.model = timm.create_model(kernel_type, pretrained=True)
+        elif 'efficientnet' in kernel_type:
+            self.model = timm.create_model(kernel_type, pretrained=True,
+                                           drop_rate=kwargs['drop_rate'], drop_path_rate=kwargs['drop_path_rate'])
 
         for param in self.model.parameters():
             param.requires_grad = False
@@ -44,7 +48,7 @@ class Model(torch.nn.Module):
         if 'swin_' in kernel_type:
             in_features = self.model.head.in_features
             self.model.head = torch.nn.Identity()
-        elif 'efficientnetv2_' in kernel_type:
+        elif 'efficientnet' in kernel_type:
             in_features = self.model.classifier.in_features
             self.model.classifier = torch.nn.Identity()
 

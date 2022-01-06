@@ -15,7 +15,7 @@ from augmentations import get_augmentations_train, get_augmentations_val
 from model import Model
 from dataset import PawpularDataset
 
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     Training.epochs = 2
@@ -105,7 +105,8 @@ def run(notes='Baseline'):
                                                  batch_size=Training.batch_size,
                                                  num_workers=Training.num_workers)
         
-        model = Model(kernel_type=Training.kernel_type, n_meta_features=n_meta_features)
+        model = Model(kernel_type=Training.kernel_type, n_meta_features=n_meta_features,
+                      drop_rate=Training.drop_rate, drop_path_rate=Training.drop_path_rate)
         model = model.to(device)
 
         patience_counter = 0
@@ -168,7 +169,7 @@ def run(notes='Baseline'):
 # }
 
 # Experiments
-run(notes="Reproduce basic experiment")
+run(notes=f"Experiment with {Training.kernel_type}")
 
 
 # setattr(Training, 'kernel_type', 'swin_large_patch4_window7_224_in22k')
