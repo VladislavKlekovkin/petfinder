@@ -70,13 +70,16 @@ for model_name, image_size in testing_models:
         model.load_state_dict(torch.load(model_path))
         model = model.to(device)
 
-        pred.append(val_epoch(model=model, loader=val_loader, criterion=criterion,
-                              use_meta=Training.use_meta, device=device, DEBUG=DEBUG, get_output=True))
+        # pred.append(val_epoch(model=model, loader=val_loader, criterion=criterion,
+        #                       use_meta=Training.use_meta, device=device, DEBUG=DEBUG, get_output=True))
+        val_loss, val_rmse = val_epoch(model=model, loader=val_loader, criterion=criterion,
+                                       use_meta=Training.use_meta, device=device, DEBUG=DEBUG)
+        print(val_rmse)
 
-    oof_predictions.append(np.concatenate(pred))
+    # oof_predictions.append(np.concatenate(pred))
 
 
 # TESTING RESULTS
 # solo
-for i, model_name in enumerate(testing_models):
-    print(f'{model_name}: {root_mean_square_error(oof_predictions[i], targets):.5f}')
+# for i, model_name in enumerate(testing_models):
+#     print(f'{model_name}: {root_mean_square_error(oof_predictions[i], targets):.5f}')
