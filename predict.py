@@ -72,9 +72,6 @@ for model_name, image_size in testing_models:
 
         pred.append(val_epoch(model=model, loader=val_loader, criterion=criterion,
                               use_meta=Training.use_meta, device=device, DEBUG=DEBUG, get_output=True))
-        # val_loss, val_rmse = val_epoch(model=model, loader=val_loader, criterion=criterion,
-        #                                use_meta=Training.use_meta, device=device, DEBUG=DEBUG)
-        # print(val_rmse)
 
     oof_predictions.append(np.concatenate(pred))
 
@@ -83,3 +80,8 @@ for model_name, image_size in testing_models:
 # solo
 for i, model_name in enumerate(testing_models):
     print(f'{model_name}: {root_mean_square_error(oof_predictions[i], targets):.5f}')
+
+# concat
+stack = np.stack(oof_predictions)
+for i in range(len(testing_models)):
+    print(f'Model 0-{i}: {root_mean_square_error(np.mean(stack[:i+1], axis=0), targets):.5f}')
