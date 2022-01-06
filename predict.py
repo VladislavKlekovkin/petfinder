@@ -44,7 +44,7 @@ else:
 df['fold'] = np.random.randint(low=0, high=Training.n_folds, size=len(df))
 
 oof_predictions = []
-targets = np.concatenate([df[df['fold'] == fold]['Pawpularity'].values for fold in range(Training.n_folds)])
+targets = np.concatenate([df[df['fold'] == fold]['Pawpularity'].values for fold in range(Training.n_folds)]) / 100.
 
 testing_models = [('swin_large_patch4_window12_384_in22k_02-01-2022-23:53:35', 384),  # 1
                   # ('swin_large_patch4_window12_384_02-01-2022-10:46:15', 384),        # 2
