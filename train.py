@@ -171,6 +171,41 @@ def run(notes='Baseline'):
 # Experiments
 run(notes=f"Experiment with {Training.kernel_type}")
 
+setattr(Training, 'kernel_type', 'efficientnet_b4')
+setattr(Training, 'drop_rate', 0.4)
+setattr(Training, 'drop_path_rate', 0.2)
+run(notes=f"Experiment with {Training.kernel_type}")
+
+setattr(Training, 'kernel_type', 'efficientnet_b6')
+setattr(Training, 'drop_rate', 0.5)
+setattr(Training, 'drop_path_rate', 0.2)
+run(notes=f"Experiment with {Training.kernel_type}")
+
+setattr(Training, 'kernel_type', 'efficientnet_b7')
+setattr(Training, 'drop_rate', 0.5)
+setattr(Training, 'drop_path_rate', 0.2)
+run(notes=f"Experiment with {Training.kernel_type}")
+
+setattr(Training, 'kernel_type', 'efficientnet_b8')
+setattr(Training, 'drop_rate', 0.5)
+setattr(Training, 'drop_path_rate', 0.2)
+run(notes=f"Experiment with {Training.kernel_type}")
+
+setattr(Training, 'kernel_type', 'efficientnetv2_m')
+setattr(Training, 'drop_rate', 0.)
+setattr(Training, 'drop_path_rate', 0.)
+run(notes=f"Experiment with {Training.kernel_type}")
+
+setattr(Training, 'kernel_type', 'efficientnetv2_l')
+setattr(Training, 'drop_rate', 0.)
+setattr(Training, 'drop_path_rate', 0.)
+run(notes=f"Experiment with {Training.kernel_type}")
+
+setattr(Training, 'kernel_type', 'efficientnetv2_xl')
+setattr(Training, 'drop_rate', 0.)
+setattr(Training, 'drop_path_rate', 0.)
+run(notes=f"Experiment with {Training.kernel_type}")
+
 
 # setattr(Training, 'kernel_type', 'swin_large_patch4_window7_224_in22k')
 # run(notes='Changed model: swin_large_patch4_window7_224_in22k')
