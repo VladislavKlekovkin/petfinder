@@ -44,7 +44,7 @@ else:
 df['fold'] = np.random.randint(low=0, high=Training.n_folds, size=len(df))
 
 oof_predictions = []
-targets = df['Pawpularity'].values
+targets = np.concatenate([df[df['fold'] == fold]['Pawpularity'].values for fold in range(Training.n_folds)])
 
 testing_models = [('swin_large_patch4_window12_384_in22k_02-01-2022-23:53:35', 384),  # 1
                   # ('swin_large_patch4_window12_384_02-01-2022-10:46:15', 384),        # 2
@@ -70,16 +70,16 @@ for model_name, image_size in testing_models:
         model.load_state_dict(torch.load(model_path))
         model = model.to(device)
 
-        # pred.append(val_epoch(model=model, loader=val_loader, criterion=criterion,
-        #                       use_meta=Training.use_meta, device=device, DEBUG=DEBUG, get_output=True))
-        val_loss, val_rmse = val_epoch(model=model, loader=val_loader, criterion=criterion,
-                                       use_meta=Training.use_meta, device=device, DEBUG=DEBUG)
-        print(val_rmse)
+        pred.append(val_epoch(model=model, loader=val_loader, criterion=criterion,
+                              use_meta=Training.use_meta, device=device, DEBUG=DEBUG, get_output=True))
+        # val_loss, val_rmse = val_epoch(model=model, loader=val_loader, criterion=criterion,
+        #                                use_meta=Training.use_meta, device=device, DEBUG=DEBUG)
+        # print(val_rmse)
 
-    # oof_predictions.append(np.concatenate(pred))
+    oof_predictions.append(np.concatenate(pred))
 
 
 # TESTING RESULTS
 # solo
-# for i, model_name in enumerate(testing_models):
-#     print(f'{model_name}: {root_mean_square_error(oof_predictions[i], targets):.5f}')
+for i, model_name in enumerate(testing_models):
+    print(f'{model_name}: {root_mean_square_error(oof_predictions[i], targets):.5f}')
