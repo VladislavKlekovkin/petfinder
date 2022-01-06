@@ -1,3 +1,4 @@
+import random
 import numpy as np
 import torch
 from tqdm import tqdm
@@ -6,15 +7,9 @@ from sklearn.metrics import mean_squared_error
 
 # REPRODUCIBILITY
 def set_random_seed(seed=42):
-    if 'random' in dir():
-        random.seed(seed)
-    if 'numpy' in dir():
-        np.random.seed(seed)
-    if 'torch' in dir():
-        torch.manual_seed(seed)
-
-
-set_random_seed()
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
 
 
 def sigmoid_np(x):

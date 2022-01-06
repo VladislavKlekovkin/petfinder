@@ -1,8 +1,5 @@
 import torch
 import timm
-from utils import set_random_seed
-
-set_random_seed()
 
 
 sigmoid_torch = torch.nn.Sigmoid()

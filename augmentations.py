@@ -1,8 +1,4 @@
-import random
 import albumentations as A
-from utils import set_random_seed
-
-set_random_seed()
 
 
 def get_augmentations_train(Training):

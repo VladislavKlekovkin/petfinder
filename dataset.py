@@ -3,10 +3,6 @@ import numpy as np
 import cv2
 import os
 
-from utils import set_random_seed
-
-set_random_seed()
-
 
 class PawpularDataset(torch.utils.data.Dataset):
 
