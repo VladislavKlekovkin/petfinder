@@ -33,7 +33,7 @@ class Training(AttributeInspect):
     batch_size = 2
     patience = float('inf')
     num_workers = 4
-    image_size = 384
+    image_size = 224
     use_meta = True
     lr = 5e-6
     scheduler = 'LambdaLR'
