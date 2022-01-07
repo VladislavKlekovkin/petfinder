@@ -168,38 +168,44 @@ def run(notes='Baseline'):
 #     'values': [1e-5, 5e-6, 2e-6, 1e-6]
 # }
 
+
+
 # Experiments
 run(notes=f"Experiment with {Training.kernel_type}")
 
-setattr(Training, 'kernel_type', 'efficientnet_b4')
-setattr(Training, 'drop_rate', 0.4)
-setattr(Training, 'drop_path_rate', 0.2)
-run(notes=f"Experiment with {Training.kernel_type}")
+# setattr(Training, 'kernel_type', 'efficientnet_b4')
+# setattr(Training, 'drop_rate', 0.4)
+# setattr(Training, 'drop_path_rate', 0.2)
+# run(notes=f"Experiment with {Training.kernel_type}")
+#
+# setattr(Training, 'kernel_type', 'tf_efficientnet_b6')
+# setattr(Training, 'drop_rate', 0.5)
+# setattr(Training, 'drop_path_rate', 0.2)
+# run(notes=f"Experiment with {Training.kernel_type}")
+#
+# setattr(Training, 'kernel_type', 'tf_efficientnet_b7')
+# setattr(Training, 'drop_rate', 0.5)
+# setattr(Training, 'drop_path_rate', 0.2)
+# run(notes=f"Experiment with {Training.kernel_type}")
+#
+# setattr(Training, 'kernel_type', 'tf_efficientnet_b8')
+# setattr(Training, 'drop_rate', 0.5)
+# setattr(Training, 'drop_path_rate', 0.2)
+# run(notes=f"Experiment with {Training.kernel_type}")
+#
+# setattr(Training, 'kernel_type', 'tf_efficientnetv2_m')
+# setattr(Training, 'drop_rate', 0.)
+# setattr(Training, 'drop_path_rate', 0.)
+# run(notes=f"Experiment with {Training.kernel_type}")
+#
+# setattr(Training, 'kernel_type', 'tf_efficientnetv2_l')
+# setattr(Training, 'drop_rate', 0.)
+# setattr(Training, 'drop_path_rate', 0.)
+# run(notes=f"Experiment with {Training.kernel_type}")
 
-setattr(Training, 'kernel_type', 'tf_efficientnet_b6')
-setattr(Training, 'drop_rate', 0.5)
-setattr(Training, 'drop_path_rate', 0.2)
-run(notes=f"Experiment with {Training.kernel_type}")
 
-setattr(Training, 'kernel_type', 'tf_efficientnet_b7')
-setattr(Training, 'drop_rate', 0.5)
-setattr(Training, 'drop_path_rate', 0.2)
-run(notes=f"Experiment with {Training.kernel_type}")
 
-setattr(Training, 'kernel_type', 'tf_efficientnet_b8')
-setattr(Training, 'drop_rate', 0.5)
-setattr(Training, 'drop_path_rate', 0.2)
-run(notes=f"Experiment with {Training.kernel_type}")
 
-setattr(Training, 'kernel_type', 'tf_efficientnetv2_m')
-setattr(Training, 'drop_rate', 0.)
-setattr(Training, 'drop_path_rate', 0.)
-run(notes=f"Experiment with {Training.kernel_type}")
-
-setattr(Training, 'kernel_type', 'tf_efficientnetv2_l')
-setattr(Training, 'drop_rate', 0.)
-setattr(Training, 'drop_path_rate', 0.)
-run(notes=f"Experiment with {Training.kernel_type}")
 
 
 

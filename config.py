@@ -26,7 +26,7 @@ class Paths(AttributeInspect):
 
 
 class Training(AttributeInspect):
-    kernel_type = 'efficientnet_b2'  # 'efficientnetv2_m', 'swin_large_patch4_window7_224'
+    kernel_type = 'tf_efficientnet_b2_ns'  # 'efficientnetv2_m', 'swin_large_patch4_window7_224'
     epochs = 7
     warm_up_epochs = 1
     n_folds = 5
@@ -39,8 +39,8 @@ class Training(AttributeInspect):
     scheduler = 'LambdaLR'
     criterion = 'BCEWithLogitsLoss'
     # for efficientnet
-    drop_rate = 0.3
-    drop_path_rate = 0.2
+    drop_rate = 0.
+    drop_path_rate = 0.
     #
     if not use_meta:
         warm_up_epochs = 0
