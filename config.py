@@ -26,17 +26,17 @@ class Paths(AttributeInspect):
 
 
 class Training(AttributeInspect):
-    kernel_type = 'tf_efficientnet_b2_ns'  # 'efficientnetv2_m', 'swin_large_patch4_window7_224'
-    epochs = 12
+    kernel_type = 'swin_large_patch4_window7_224'  # 'efficientnetv2_m', 'swin_large_patch4_window7_224'
+    epochs = 5
     warm_up_epochs = 2
     n_folds = 5
     batch_size = 2
     patience = float('inf')
     num_workers = 4
     image_size = 384
-    use_meta = False
+    use_meta = True
     lr = 5e-6
-    scheduler = None#'LambdaLR'
+    scheduler = 'LambdaLR'
     criterion = 'BCEWithLogitsLoss'
     # for efficientnet
     drop_rate = 0.3
