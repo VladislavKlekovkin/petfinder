@@ -34,7 +34,7 @@ class Training(AttributeInspect):
     patience = float('inf')
     num_workers = 4
     image_size = 384
-    use_meta = True
+    use_meta = False
     lr = 5e-6
     scheduler = None#'LambdaLR'
     criterion = 'BCEWithLogitsLoss'
