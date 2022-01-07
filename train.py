@@ -201,10 +201,6 @@ setattr(Training, 'drop_rate', 0.)
 setattr(Training, 'drop_path_rate', 0.)
 run(notes=f"Experiment with {Training.kernel_type}")
 
-setattr(Training, 'kernel_type', 'tf_efficientnetv2_xl')
-setattr(Training, 'drop_rate', 0.)
-setattr(Training, 'drop_path_rate', 0.)
-run(notes=f"Experiment with {Training.kernel_type}")
 
 
 # setattr(Training, 'kernel_type', 'swin_large_patch4_window7_224_in22k')
