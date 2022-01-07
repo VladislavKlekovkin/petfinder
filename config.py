@@ -39,8 +39,8 @@ class Training(AttributeInspect):
     scheduler = None#'LambdaLR'
     criterion = 'BCEWithLogitsLoss'
     # for efficientnet
-    drop_rate = 0.
-    drop_path_rate = 0.
+    drop_rate = 0.3
+    drop_path_rate = 0.2
     #
     if not use_meta:
         warm_up_epochs = 0
