@@ -35,8 +35,7 @@ class Model(torch.nn.Module):
         if 'swin_' in kernel_type:
             self.model = timm.create_model(kernel_type, pretrained=True)
         elif 'efficientnet' in kernel_type:
-            self.model = timm.create_model(kernel_type, pretrained=True,
-                                           drop_rate=kwargs['drop_rate'], drop_path_rate=kwargs['drop_path_rate'])
+            self.model = timm.create_model(kernel_type, pretrained=True)#,drop_rate=kwargs['drop_rate'], drop_path_rate=kwargs['drop_path_rate'])
 
         for param in self.model.parameters():
             param.requires_grad = False
