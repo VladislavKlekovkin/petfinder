@@ -35,7 +35,7 @@ class Training(AttributeInspect):
     num_workers = 4
     image_size = 224
     use_meta = True
-    lr = 5e-6
+    lr = 5e-5
     scheduler = 'LambdaLR'
     criterion = 'BCEWithLogitsLoss'
     # for efficientnet
