@@ -33,7 +33,7 @@ def get_scheduler(Training, optimizer):
 
     if Training.scheduler is 'LambdaLR':
         lr = Training.lr
-        return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda e: (lr - 0.5*lr*e)/lr)
+        return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda e: 0.65 ** e)
         # lambda e: .1 ** e
 
 def get_criterion(Training):
