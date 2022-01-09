@@ -23,7 +23,7 @@ def root_mean_square_error(predictions, targets):
     return mean_squared_error(sigmoid_np(predictions) * 100., targets * 100.) ** .5
 
 
-def get_scheduler(Training, optimizer):
+def get_scheduler(Training, optimizer, epochs):
     if Training.scheduler is None:
         return None
 
@@ -37,7 +37,7 @@ def get_scheduler(Training, optimizer):
         # lambda e: .1 ** e
 
     if Training.scheduler is 'melanoma':
-        scheduler_cosine = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, args.n_epochs - 1)
+        scheduler_cosine = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, epochs - 1)
         scheduler_warmup = GradualWarmupSchedulerV2(optimizer, multiplier=10, total_epoch=1,
                                                     after_scheduler=scheduler_cosine)
 

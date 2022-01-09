@@ -114,7 +114,7 @@ def run(notes='Baseline'):
         model_file = os.path.join(Paths.weights, f'{model_name}_best.pth')
 
         optimizer = torch.optim.Adam(model.parameters(), lr=Training.lr)
-        scheduler = get_scheduler(Training, optimizer)
+        scheduler = get_scheduler(Training, optimizer, Training.epochs)
 
         for epoch in range(1, Training.epochs + 1):
             print('Epoch:', epoch)
