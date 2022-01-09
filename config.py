@@ -26,7 +26,7 @@ class Paths(AttributeInspect):
 
 
 class Training(AttributeInspect):
-    kernel_type = 'tf_efficientnet_b4_ns'  # 'efficientnetv2_m', 'swin_large_patch4_window7_224'
+    kernel_type = 'tf_efficientnetv2_m'  # 'efficientnetv2_m', 'swin_large_patch4_window7_224'
     epochs = 15
     warm_up_epochs = 0
     n_folds = 5
