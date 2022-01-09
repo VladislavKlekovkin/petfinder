@@ -34,7 +34,7 @@ class Training(AttributeInspect):
     patience = float('inf')
     num_workers = 4
     image_size = 384
-    use_meta = True
+    use_meta = False
     lr = 2e-5
     scheduler = 'melanoma'
     criterion = 'BCEWithLogitsLoss'
