@@ -35,8 +35,8 @@ class Training(AttributeInspect):
     num_workers = 4
     image_size = 384
     use_meta = True
-    lr = 2e-6
-    scheduler = 'LambdaLR'
+    lr = 2e-5
+    scheduler = 'melanoma'
     criterion = 'BCEWithLogitsLoss'
     # for efficientnet
     drop_rate = 0.3

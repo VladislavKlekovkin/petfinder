@@ -151,6 +151,7 @@ def run(notes='Baseline'):
             patience_counter += 1
             if scheduler:
                 scheduler.step()
+                if Training.scheduler == 'melanoma' and epoch == 2: scheduler.step()  # bug workaround
         
         # Memory cleaning
         model = None

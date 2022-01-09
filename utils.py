@@ -3,7 +3,7 @@ import numpy as np
 import torch
 from tqdm import tqdm
 from sklearn.metrics import mean_squared_error
-
+from scheduler import GradualWarmupSchedulerV2
 
 # REPRODUCIBILITY
 def set_random_seed(seed=42):
@@ -35,6 +35,14 @@ def get_scheduler(Training, optimizer):
         lr = Training.lr
         return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda e: 0.65 ** e)
         # lambda e: .1 ** e
+
+    if Training.scheduler is 'melanoma':
+        scheduler_cosine = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, args.n_epochs - 1)
+        scheduler_warmup = GradualWarmupSchedulerV2(optimizer, multiplier=10, total_epoch=1,
+                                                    after_scheduler=scheduler_cosine)
+
+        return scheduler_warmup
+
 
 def get_criterion(Training):
 
