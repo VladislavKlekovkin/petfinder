@@ -7,8 +7,8 @@ def get_augmentations_train(Training):
         # A.VerticalFlip(p=0.5),
         A.HorizontalFlip(p=0.5),
         A.RandomRotate90(p=0.5),
-        # A.RandomBrightness(limit=0.2, p=0.75),
-        # A.RandomContrast(limit=0.2, p=0.75),
+        A.RandomBrightness(limit=0.05, p=0.5),
+        A.RandomContrast(limit=0.05, p=0.5),
         # A.OneOf([
         #     A.MotionBlur(blur_limit=5),
         #     A.MedianBlur(blur_limit=5),
@@ -23,7 +23,7 @@ def get_augmentations_train(Training):
         # ], p=0.7),
         #
         # A.CLAHE(),
-        # A.HueSaturationValue(),
+        A.HueSaturationValue(),
         # A.RandomBrightness(),
         #
         # A.ShiftScaleRotate(shift_limit=0.1, scale_limit=0.1, rotate_limit=15, border_mode=0, p=0.85),
