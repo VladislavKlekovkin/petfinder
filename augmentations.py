@@ -5,8 +5,8 @@ def get_augmentations_train(Training):
     augmentations_train = A.Compose([
         # A.Transpose(p=0.5),
         # A.VerticalFlip(p=0.5),
-        # A.HorizontalFlip(p=0.5),
-        # A.RandomRotate90(p=0.5),
+        A.HorizontalFlip(p=0.5),
+        A.RandomRotate90(p=0.5),
         # A.RandomBrightness(limit=0.2, p=0.75),
         # A.RandomContrast(limit=0.2, p=0.75),
         # A.OneOf([

@@ -105,8 +105,7 @@ def run(notes='Baseline'):
                                                  batch_size=Training.batch_size,
                                                  num_workers=Training.num_workers)
         
-        model = Model(kernel_type=Training.kernel_type, n_meta_features=n_meta_features,
-                      drop_rate=Training.drop_rate, drop_path_rate=Training.drop_path_rate)
+        model = Model(kernel_type=Training.kernel_type, n_meta_features=n_meta_features) # ,drop_rate=Training.drop_rate, drop_path_rate=Training.drop_path_rate)
         model = model.to(device)
 
         patience_counter = 0

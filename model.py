@@ -28,7 +28,7 @@ class SwishModule(torch.nn.Module):
 
 class Model(torch.nn.Module):
 
-    def __init__(self, kernel_type, n_meta_features=0, n_meta_dim=[512, 128], **kwargs):
+    def __init__(self, kernel_type, n_meta_features=0, n_meta_dim=[128, 32], **kwargs):
 
         super().__init__()
         self.n_meta_features = n_meta_features
