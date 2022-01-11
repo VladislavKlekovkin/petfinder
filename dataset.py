@@ -34,7 +34,7 @@ class PawpularDataset(torch.utils.data.Dataset):
         else:
             data = torch.tensor(image, dtype=torch.float)
 
-        if self.mode == 'test':
-            return data
+        # if self.mode == 'test':
+        #     return data
 
         return data, torch.tensor([row['Pawpularity'] / 100.], dtype=torch.float)
