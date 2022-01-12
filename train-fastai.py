@@ -115,5 +115,7 @@ def run(kernel_type, img_size):
         torch.cuda.empty_cache()
         gc.collect()
 
-
+run('swin_large_patch4_window12_384', 384)
+run('swin_large_patch4_window12_384_in22k', 384)
 run('swin_large_patch4_window7_224', 224)
+run('swin_large_patch4_window7_224_in22k', 224)
