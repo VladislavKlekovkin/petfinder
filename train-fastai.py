@@ -40,7 +40,7 @@ for i, (_, train_index) in enumerate(strat_kfold.split(train_df.index, train_df[
 train_df['fold'] = train_df['fold'].astype('int')
 
 
-def get_data(fold, img_size):
+def get_data(fold, img_size=224):
     #     train_df_no_val = train_df.query(f'fold != {fold}')
     #     train_df_val = train_df.query(f'fold == {fold}')
 
