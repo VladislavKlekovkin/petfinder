@@ -40,7 +40,7 @@ for i, (_, train_index) in enumerate(strat_kfold.split(train_df.index, train_df[
 train_df['fold'] = train_df['fold'].astype('int')
 
 
-def get_data(fold):
+def get_data(fold, img_size):
     #     train_df_no_val = train_df.query(f'fold != {fold}')
     #     train_df_val = train_df.query(f'fold == {fold}')
 
@@ -58,7 +58,7 @@ def get_data(fold):
                                    y_block=RegressionBlock,  # The type of target
                                    bs=BATCH_SIZE,  # pass in batch size
                                    num_workers=8,
-                                   item_tfms=Resize(224),  # pass in item_tfms
+                                   item_tfms=Resize(img_size),  # pass in item_tfms
                                    batch_tfms=setup_aug_tfms(
                                        [Brightness(), Contrast(), Hue(), Saturation()]))  # pass in batch_tfms
 
@@ -70,8 +70,8 @@ the_data = get_data(0)
 assert (len(the_data.train) + len(the_data.valid)) == (len(train_df)//BATCH_SIZE)
 
 
-def get_learner(fold_num, kernel_type):
-    data = get_data(fold_num)
+def get_learner(fold_num, kernel_type, img_size):
+    data = get_data(fold_num, img_size)
 
     model = create_model(kernel_type, pretrained=True, num_classes=data.c)
 
@@ -84,7 +84,7 @@ def run(kernel_type, img_size):
     for i in range(N_FOLDS):
         print(f'Fold {i} results')
 
-        learn = get_learner(fold_num=i, kernel_type=kernel_type)
+        learn = get_learner(fold_num=i, kernel_type=kernel_type, img_size)
 
         learn.fit_one_cycle(5, 2e-5, cbs=[SaveModelCallback(fname=f'../{kernel_type}_fold_{i}'),
                                           EarlyStoppingCallback(monitor='petfinder_rmse', comp=np.less, patience=2)])
