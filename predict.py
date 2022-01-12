@@ -14,10 +14,15 @@ from augmentations import get_augmentations_val
 from model import Model
 from dataset import PawpularDataset
 
+from utils import sigmoid_np
+from sklearn.metrics import mean_squared_error
+
 DEBUG = False
 
 set_random_seed()
 device = torch.device('cuda')
+
+Training.use_meta = True
 
 criterion = get_criterion(Training)
 
@@ -65,7 +70,7 @@ for model_name, image_size in testing_models:
                                                  batch_size=Training.batch_size,
                                                  num_workers=Training.num_workers)
 
-        model = Model(kernel_type=model_name[:-20], n_meta_features=n_meta_features, pretrained=False)
+        model = Model(kernel_type=model_name[:-20], n_meta_features=n_meta_features, n_meta_dim=[512, 128], pretrained=False)
         model_path = os.path.join(Paths.weights, f'{model_name}_fold_{fold}_best.pth')
         model.load_state_dict(torch.load(model_path))
         model = model.to(device)
@@ -84,4 +89,5 @@ for i, model_name in enumerate(testing_models):
 # concat
 stack = np.stack(oof_predictions)
 for i in range(len(testing_models)):
-    print(f'Model 0-{i}: {root_mean_square_error(np.mean(stack[:i+1], axis=0), targets):.5f}')
+    print(f'Model 0-{i}: {root_mean_square_error(np.mean(stack[:i+1], axis=0), targets):.5f};')
+    #print(f'Model 0-{i}: {mean_squared_error(np.mean(sigmoid_np(stack[:i + 1]), axis=0) * 100, targets * 100) ** 0.5:.5f}.')
