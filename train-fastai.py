@@ -17,7 +17,7 @@ torch.cuda.manual_seed(seed)
 torch.backends.cudnn.deterministic = True
 torch.use_deterministic_algorithms = True
 
-BATCH_SIZE = 32
+BATCH_SIZE = 16
 
 dataset_path = Path('../input/petfinder-pawpularity-score/')
 train_df = pd.read_csv(dataset_path/'train.csv')
