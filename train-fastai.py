@@ -86,7 +86,7 @@ def run(kernel_type, img_size):
 
         learn = get_learner(fold_num=i, kernel_type=kernel_type)
 
-        learn.fit_one_cycle(5, 2e-5, cbs=[SaveModelCallback(fname=f'../input/weights/{kernel_type}_fold_{i}'),
+        learn.fit_one_cycle(5, 2e-5, cbs=[SaveModelCallback(fname=f'../{kernel_type}_fold_{i}'),
                                           EarlyStoppingCallback(monitor='petfinder_rmse', comp=np.less, patience=2)])
 
         learn.recorder.plot_loss()
