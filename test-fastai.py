@@ -53,10 +53,10 @@ train_df['fold'] = train_df['fold'].astype('int')
 oof_predictions = []
 targets = np.concatenate([train_df[train_df['fold'] == fold]['Pawpularity'].values for fold in range(N_FOLDS)]) / 100.
 
-testing_models = [('swin_large_patch4_window12_384', 384),  # 1
-                  ('swin_large_patch4_window12_384', 384),        # 2
-                  ('swin_large_patch4_window7_224_in22k', 224),   # 3
-                  ('swin_large_patch4_window7_224', 224)          # 4
+testing_models = [('swin_large_patch4_window12_384', 384)  # 1
+                  # ('swin_large_patch4_window12_384', 384),        # 2
+                  # ('swin_large_patch4_window7_224_in22k', 224),   # 3
+                  # ('swin_large_patch4_window7_224', 224)          # 4
                  ]
 # train_df = train_df.head(100)
 # targets = targets[:100]
@@ -80,7 +80,7 @@ for kernel_type, img_size in testing_models:
         model = create_model(kernel_type, pretrained=False, num_classes=dls.c)
         #model.load_state_dict(torch.load(f'{kernel_type}_fold_{i}.pth'))
         learn = Learner(dls, model, loss_func=BCEWithLogitsLossFlat(), metrics=petfinder_rmse).to_fp16()
-        learn.load(f'../{kernel_type}_fold_{i}')
+        learn.load(f'../{kernel_type}_fold_{fold}')
 
         val_dl = dls.test_dl(val_df)
         preds, _ = learn.tta(dl=val_dl, n=5, beta=0)
