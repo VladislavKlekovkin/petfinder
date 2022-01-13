@@ -67,7 +67,7 @@ for kernel_type, img_size in testing_models:
         val_df = train_df[train_df['fold'] == fold]
 
         model = create_model(kernel_type, pretrained=False, num_classes=dls.c)
-        model.load_state_dict(torch.load(f'../{kernel_type}_fold_{i}'))
+        model.load_state_dict(torch.load(f'../{kernel_type}_fold_{i}.pth'))
         learn = Learner(dls, model, loss_func=BCEWithLogitsLossFlat(), metrics=petfinder_rmse).to_fp16()
 
         val_dl = dls.test_dl(val_df)
