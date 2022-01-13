@@ -115,7 +115,7 @@ def run(kernel_type, img_size):
         torch.cuda.empty_cache()
         gc.collect()
 
-run('tf_efficientnetv2_m', 384)
-run('tf_efficientnet_b7_ns', 384)
-run('tf_efficientnet_b5_ns', 384)
-run('tf_efficientnet_b4_ns', 384)
+run('tf_efficientnetv2_m', 224)
+run('tf_efficientnet_b7_ns', 224)
+run('tf_efficientnet_b5_ns', 224)
+run('tf_efficientnet_b4_ns', 224)
