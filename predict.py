@@ -2,6 +2,7 @@ import torch
 import numpy as np
 import pandas
 import os
+import timm
 # import gc
 from tqdm import tqdm
 # import wandb
@@ -70,8 +71,9 @@ for model_name, image_size in testing_models:
                                                  batch_size=Training.batch_size,
                                                  num_workers=Training.num_workers)
 
-        model = Model(kernel_type=model_name, n_meta_features=n_meta_features, n_meta_dim=[512, 128], pretrained=False)
+        #model = Model(kernel_type=model_name, n_meta_features=n_meta_features, n_meta_dim=[512, 128], pretrained=False)
         #model_path = os.path.join(Paths.weights, f'{model_name}_fold_{fold}_best.pth')
+        model = timm.create_model(model_name, pretrained=False, num_classes=1)
         model_path = f'{model_name}_fold_{fold}.pth'
         model.load_state_dict(torch.load(model_path))
         model = model.to(device)
