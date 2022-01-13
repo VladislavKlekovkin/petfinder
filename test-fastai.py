@@ -74,7 +74,7 @@ for kernel_type, img_size in testing_models:
                                    item_tfms=Resize(img_size),  # pass in item_tfms
                                    batch_tfms=setup_aug_tfms([Brightness(), Contrast(), Hue(), Saturation()]))
 
-    for fold in range(N_FOLDS):
+    for fold in range(1):
         val_df = train_df[train_df['fold'] == fold]
 
         model = create_model(kernel_type, pretrained=False, num_classes=dls.c)
