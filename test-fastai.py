@@ -84,6 +84,7 @@ for kernel_type, img_size in testing_models:
 
         val_dl = dls.test_dl(val_df)
         preds, _ = learn.tta(dl=val_dl, n=1, beta=0)
+        print(preds)
         pred.append(preds)
 
         del learn
