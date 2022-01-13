@@ -80,7 +80,7 @@ for kernel_type, img_size in testing_models:
         model = create_model(kernel_type, pretrained=False, num_classes=dls.c)
         #model.load_state_dict(torch.load(f'{kernel_type}_fold_{i}.pth'))
         learn = Learner(dls, model, loss_func=BCEWithLogitsLossFlat(), metrics=petfinder_rmse).to_fp16()
-        learn.load(f'{kernel_type}_fold_{i}')
+        learn.load(f'../{kernel_type}_fold_{i}')
 
         val_dl = dls.test_dl(val_df)
         preds, _ = learn.tta(dl=val_dl, n=5, beta=0)
