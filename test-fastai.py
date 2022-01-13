@@ -5,7 +5,7 @@ import gc
 from sklearn.model_selection import KFold
 from sklearn.model_selection import StratifiedKFold
 import numpy as np
-
+from sklearn.metrics import mean_squared_error
 
 def petfinder_rmse(input,target):
     return 100*torch.sqrt(F.mse_loss(F.sigmoid(input.flatten()), target))
