@@ -23,7 +23,7 @@ DEBUG = False
 set_random_seed()
 device = torch.device('cuda')
 
-Training.use_meta = True
+Training.use_meta = False
 
 criterion = get_criterion(Training)
 
