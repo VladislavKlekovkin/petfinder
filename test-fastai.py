@@ -33,7 +33,7 @@ train_df['bins'] = pd.cut(train_df['norm_score'], bins=num_bins, labels=False)
 
 train_df['fold'] = -1
 
-train_df = 10
+N_FOLDS = 10
 strat_kfold = StratifiedKFold(n_splits=N_FOLDS, random_state=seed, shuffle=True)
 for i, (_, train_index) in enumerate(strat_kfold.split(train_df.index, train_df['bins'])):
     train_df.iloc[train_index, -1] = i
@@ -41,7 +41,7 @@ for i, (_, train_index) in enumerate(strat_kfold.split(train_df.index, train_df[
 train_df['fold'] = train_df['fold'].astype('int')
 
 oof_predictions = []
-targets = np.concatenate([train_df[train_df['fold'] == fold]['Pawpularity'].values for fold in range(train_df)]) / 100.
+targets = np.concatenate([train_df[train_df['fold'] == fold]['Pawpularity'].values for fold in range(N_FOLDS)]) / 100.
 
 testing_models = [('swin_large_patch4_window12_384', 384)  # 1
                   # ('swin_large_patch4_window12_384', 384),        # 2
@@ -77,7 +77,7 @@ for kernel_type, img_size in testing_models:
         del learn
         torch.cuda.empty_cache()
         gc.collect()
-        
+
     oof_predictions.append(np.concatenate(pred))
 
 for i, model_name in enumerate(testing_models):
