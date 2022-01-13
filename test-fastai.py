@@ -53,13 +53,13 @@ train_df['fold'] = train_df['fold'].astype('int')
 oof_predictions = []
 targets = np.concatenate([train_df[train_df['fold'] == fold]['Pawpularity'].values for fold in range(N_FOLDS)]) / 100.
 
-testing_models = [('swin_large_patch4_window12_384', 384)  # 1
-                  # ('swin_large_patch4_window12_384', 384),        # 2
-                  # ('swin_large_patch4_window7_224_in22k', 224),   # 3
-                  # ('swin_large_patch4_window7_224', 224)          # 4
+testing_models = [('swin_large_patch4_window12_384', 384),  # 1
+                  ('swin_large_patch4_window12_384', 384),        # 2
+                  ('swin_large_patch4_window7_224_in22k', 224),   # 3
+                  ('swin_large_patch4_window7_224', 224)          # 4
                  ]
-train_df = train_df.head(100)
-targets = targets[:100]
+# train_df = train_df.head(100)
+# targets = targets[:100]
 for kernel_type, img_size in testing_models:
 
     pred =[]
