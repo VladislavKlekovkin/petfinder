@@ -51,7 +51,7 @@ for i, (_, train_index) in enumerate(strat_kfold.split(train_df.index, train_df[
 train_df['fold'] = train_df['fold'].astype('int')
 
 oof_predictions = []
-targets = np.concatenate([train_df[train_df['fold'] == fold]['Pawpularity'].values for fold in range(N_FOLDS)]) / 100.
+targets = np.concatenate([train_df[train_df['fold'] == fold]['norm_score'].values for fold in range(N_FOLDS)])
 
 testing_models = [('swin_large_patch4_window12_384', 384)  # 1
                   # ('swin_large_patch4_window12_384', 384),        # 2
@@ -63,18 +63,19 @@ testing_models = [('swin_large_patch4_window12_384', 384)  # 1
 for kernel_type, img_size in testing_models:
 
     pred =[]
-    dls = ImageDataLoaders.from_df(train_df,  # pass in train DataFrame
-                                   valid_pct=0.2,  # 80-20 train-validation random split
-                                   seed=365,  # seed
-                                   fn_col='path',  # filename/path is in the second column of the DataFrame
-                                   label_col='norm_score',  # label is in the first column of the DataFrame
-                                   y_block=RegressionBlock,  # The type of target
-                                   bs=BATCH_SIZE,  # pass in batch size
-                                   num_workers=8,
-                                   item_tfms=Resize(img_size),  # pass in item_tfms
-                                   batch_tfms=setup_aug_tfms([Brightness(), Contrast(), Hue(), Saturation()]))
+
 
     for fold in range(N_FOLDS):
+        dls = ImageDataLoaders.from_df(train_df,  # pass in train DataFrame
+                                       valid_pct=0.2,  # 80-20 train-validation random split
+                                       seed=365,  # seed
+                                       fn_col='path',  # filename/path is in the second column of the DataFrame
+                                       label_col='norm_score',  # label is in the first column of the DataFrame
+                                       y_block=RegressionBlock,  # The type of target
+                                       bs=BATCH_SIZE,  # pass in batch size
+                                       num_workers=8,
+                                       item_tfms=Resize(img_size),  # pass in item_tfms
+                                       batch_tfms=setup_aug_tfms([Brightness(), Contrast(), Hue(), Saturation()]))
         val_df = train_df[train_df['fold'] == fold]
 
         model = create_model(kernel_type, pretrained=False, num_classes=dls.c)
@@ -84,7 +85,7 @@ for kernel_type, img_size in testing_models:
 
         val_dl = dls.test_dl(val_df)
         preds, _ = learn.tta(dl=val_dl, n=1, beta=0)
-        print(preds)
+        
         pred.append(preds)
 
         del learn
