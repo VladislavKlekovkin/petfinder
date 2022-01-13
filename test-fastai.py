@@ -10,6 +10,16 @@ import numpy as np
 def petfinder_rmse(input,target):
     return 100*torch.sqrt(F.mse_loss(F.sigmoid(input.flatten()), target))
 
+def sigmoid_np(x):
+    z = np.exp(-x)
+    sig = 1 / (1 + z)
+
+    return sig
+
+
+def root_mean_square_error(predictions, targets):
+    return mean_squared_error(sigmoid_np(predictions) * 100., targets * 100.) ** .5
+
 
 seed=365
 set_seed(seed, reproducible=True)
@@ -48,7 +58,8 @@ testing_models = [('swin_large_patch4_window12_384', 384)  # 1
                   # ('swin_large_patch4_window7_224_in22k', 224),   # 3
                   # ('swin_large_patch4_window7_224', 224)          # 4
                  ]
-
+train_df = train_df.head(100)
+targets = targets[:100]
 for kernel_type, img_size in testing_models:
 
     pred =[]
@@ -81,9 +92,9 @@ for kernel_type, img_size in testing_models:
     oof_predictions.append(np.concatenate(pred))
 
 for i, model_name in enumerate(testing_models):
-    print(f'{model_name}: {petfinder_rmse(oof_predictions[i], targets):.5f}')
+    print(f'{model_name}: {root_mean_square_error(oof_predictions[i], targets):.5f}')
 
 stack = np.stack(oof_predictions)
 for i in range(len(testing_models)):
-    print(f'Model 0-{i}: {petfinder_rmse(np.mean(stack[:i+1], axis=0), targets):.5f};')
+    print(f'Model 0-{i}: {root_mean_square_error(np.mean(stack[:i+1], axis=0), targets):.5f};')
 
