@@ -108,4 +108,4 @@ for i, model_name in enumerate(testing_models):
 stack = np.stack(oof_predictions)
 for i in range(len(testing_models)):
     print(f'Model 0-{i}: {root_mean_square_error(np.mean(stack[:i+1], axis=0), targets):.5f};')
-    #print(f'Model 0-{i}: {mean_squared_error(np.mean(sigmoid_np(stack[:i + 1]), axis=0) * 100, targets * 100) ** 0.5:.5f}.')
+    print(f'Model 0-{i}: {mean_squared_error(np.mean(sigmoid_np(stack[:i + 1]), axis=0) * 100, targets * 100) ** 0.5:.5f}.')
