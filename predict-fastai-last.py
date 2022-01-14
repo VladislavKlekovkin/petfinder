@@ -68,8 +68,8 @@ oof_predictions = []
 targets = np.concatenate([df[df['fold'] == fold]['Pawpularity'].values for fold in range(10)]) / 100.
 
 testing_models = [('swin_large_patch4_window12_384_in22k', 384),  # 1
-                  ('swin_large_patch4_window12_384', 384)
-                  ('swin_large_patch4_window7_224_in22k', 224)    # 3
+                  ('swin_large_patch4_window12_384', 384),
+                  ('swin_large_patch4_window7_224_in22k', 224),   # 3
                   ('swin_large_patch4_window7_224', 224)
                  ]
 
