@@ -15,8 +15,6 @@ from augmentations import get_augmentations_val
 from model import Model
 from dataset import PawpularDataset
 
-from utils import sigmoid_np
-from sklearn.metrics import mean_squared_error
 
 DEBUG = False
 
@@ -52,12 +50,12 @@ df['fold'] = np.random.randint(low=0, high=Training.n_folds, size=len(df))
 oof_predictions = []
 targets = np.concatenate([df[df['fold'] == fold]['Pawpularity'].values for fold in range(Training.n_folds)]) / 100.
 
-# testing_models = [('swin_large_patch4_window12_384_in22k_02-01-2022-23:53:35', 384),  # 1
-#                   ('swin_large_patch4_window12_384_02-01-2022-10:46:15', 384),        # 2
-#                   ('swin_large_patch4_window7_224_in22k_02-01-2022-04:51:06', 224),   # 3
-#                   ('swin_large_patch4_window7_224_29-12-2021-21:45:26', 224)          # 4
-#                  ]
-testing_models = [('swin_large_patch4_window12_384', 384)]
+testing_models = [('swin_large_patch4_window12_384_in22k_02-01-2022-23:53:35', 384),  # 1
+                  ('swin_large_patch4_window12_384_02-01-2022-10:46:15', 384),        # 2
+                  ('swin_large_patch4_window7_224_in22k_02-01-2022-04:51:06', 224),   # 3
+                  ('swin_large_patch4_window7_224_29-12-2021-21:45:26', 224)          # 4
+                 ]
+
 for model_name, image_size in testing_models:
     pred = []
     Training.image_size = image_size
@@ -71,10 +69,8 @@ for model_name, image_size in testing_models:
                                                  batch_size=Training.batch_size,
                                                  num_workers=Training.num_workers)
 
-        #model = Model(kernel_type=model_name, n_meta_features=n_meta_features, n_meta_dim=[512, 128], pretrained=False)
-        #model_path = os.path.join(Paths.weights, f'{model_name}_fold_{fold}_best.pth')
-        model = timm.create_model(model_name, pretrained=False, num_classes=1)
-        model_path = f'{model_name}_fold_{fold}.pth'
+        model = Model(kernel_type=model_name, n_meta_features=n_meta_features, n_meta_dim=[512, 128], pretrained=False)
+        model_path = os.path.join(Paths.weights, f'{model_name}_fold_{fold}_best.pth')
         model.load_state_dict(torch.load(model_path))
         model = model.to(device)
 
@@ -93,4 +89,3 @@ for i, model_name in enumerate(testing_models):
 stack = np.stack(oof_predictions)
 for i in range(len(testing_models)):
     print(f'Model 0-{i}: {root_mean_square_error(np.mean(stack[:i+1], axis=0), targets):.5f};')
-    #print(f'Model 0-{i}: {mean_squared_error(np.mean(sigmoid_np(stack[:i + 1]), axis=0) * 100, targets * 100) ** 0.5:.5f}.')

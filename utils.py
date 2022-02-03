@@ -34,9 +34,8 @@ def get_scheduler(Training, optimizer, epochs):
     if Training.scheduler is 'LambdaLR':
         lr = Training.lr
         return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lambda e: 0.65 ** e)
-        # lambda e: .1 ** e
 
-    if Training.scheduler is 'melanoma':
+    if Training.scheduler is 'GradualWarmup':
         scheduler_cosine = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, epochs - 1)
         scheduler_warmup = GradualWarmupSchedulerV2(optimizer, multiplier=10, total_epoch=1,
                                                     after_scheduler=scheduler_cosine)
